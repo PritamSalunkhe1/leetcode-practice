@@ -12,37 +12,31 @@ class Solution {
         int col = 0;
         int d = 1;
 
-        for (int i = 0; i < m*n; i++) {
-            result[i]= mat[row][col];
-            if((row+col)%2==0){  //Move Up
-                if(col==n-1){
+        for (int i = 0; i < m * n; i++) {
+            result[i] = mat[row][col];
+            if ((row + col) % 2 == 0) { //Move Up
+                if (col == n - 1) {
                     //reached last column
                     row++;
-                }
-                else if (row==0){
+                } else if (row == 0) {
                     //reached first row
                     col++;
-                }
-                else{
+                } else {
                     row--;
                     col++;
                 }
-            }
-            else{   //Move Down
-                if(row==m-1){
+            } else { //Move Down
+                if (row == m - 1) {
                     //reached last row.
                     col++;
-                }
-                else if(col==0){
+                } else if (col == 0) {
                     //reached first column
                     row++;
-                }
-                else{
+                } else {
                     row++;
                     col--;
                 }
             }
-            
         }
         return result;
     }
