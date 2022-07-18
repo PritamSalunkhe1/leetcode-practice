@@ -1,34 +1,18 @@
 class Solution {
-    public class Pair{
-        int key;
-        int num;
-        Pair(int key,int num){
-            this.key = key;
-            this.num = num;
-        }
-    }
     public int[] frequencySort(int[] nums) {
-        HashMap<Integer,Integer> freqMap = new HashMap<>();
-        for(int i = 0;i<nums.length;i++){
-            freqMap.put(nums[i],freqMap.getOrDefault(nums[i],0)+1);
-        }
         
-        PriorityQueue<Pair> minHeap = new PriorityQueue<>(new Comparator<Pair>(){
-            public int compare(Pair p1, Pair p2){
-                if(p1.key == p2.key){
-                    return p2.num - p1.num;
-                }else{
-                    return p1.key - p2.key;
-                }
-            }
-        });
+        HashMap<Integer,Integer> countsMap = new HashMap<>();
         
-        for(int i = 0;i<nums.length;i++){
-            minHeap.add(new Pair(freqMap.get(nums[i]),nums[i]));
+        for(int num:nums) {
+            countsMap.put(num, countsMap.getOrDefault(num,0)+1);
         }
-        for(int i = 0;i<nums.length;i++){
-            nums[i] = minHeap.poll().num;
-        }
-        return nums;
+            
+      return  countsMap.entrySet().stream()
+          .sorted(((Map.Entry<Integer,Integer> e1, Map.Entry<Integer,Integer> e2)
+                    ->  (e1.getValue()==e2.getValue()) ?  e2.getKey() - e1.getKey() :  e1.getValue() - e2.getValue()                                  ))
+            .flatMap( entry -> Collections.nCopies(entry.getValue(),entry.getKey()).stream())
+            .mapToInt(v -> v)
+          .toArray();
+        
     }
 }
